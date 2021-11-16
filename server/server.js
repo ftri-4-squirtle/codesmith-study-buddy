@@ -1,104 +1,81 @@
-// bringing express into our project
 const express = require('express');
-// bringing cookie-session to our project
-const cookieSession = require('cookie-session');
-// bringing passport into our project
 const passport = require('passport');
-// bringing a Google "plugin" or Strategy that interacts with Passport
-const GoogleStrategy = require('passport-google');
-// brining in our getUser and createUser methods from our database methods file
-const { getUser, createUser } = require('../db/methods');
+const cookieSession = require('cookie-session');
+require('dotenv').config();
 
-// initializing our app by invoking express
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
+
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+        done(null, user);
+});
+
+passport.use(new GoogleStrategy({
+        clientID: process.env.GOOGLECLIENTID,
+        clientSecret: process.env.GOOGLECLIENTSECRET,
+        callbackURL: "http://localhost:8080/google/callback",
+        passReqToCallback   : true
+    },
+    function(request, accessToken, refreshToken, profile, done) {
+            return done(null, profile);
+    }
+));
+
 const app = express();
 
-// initialize passport to be used
-app.use(passport.initialize());
-// using session cookies
-app.use(passport.session());
-// using cookieSession in our app
 app.use(cookieSession({
-  // age of the cookie in milliseconds
-     // cookie will last for one day
-  maxAge: 24 * 60 * 60 * 1000,
-  // encrypts the user id
-  keys: [process.env.COOKIEKEY],
-}));
-// setting up our serialize and deserialize methods from passport
-passport.serializeUser((user, done) => {
-  // calling done method once we get the user from the db
-  done(null, user.googleid);
-});
+  name: 'google-auth-session',
+  keys: ['key1', 'key2']
+}))
 
-passport.deserializeUser((id, done) => {
-  // need to find user by id
-  getUser(id)
-    .then(currentUser => {
-      // calling done once we've found the user
-      done(null, currentUser[0]);
-    });
-});
+const isLoggedIn = (req, res, next) => {
+    if (req.user) {
+        next();
+    } else {
+        res.sendStatus(401);
+    }
+}
 
-// setting our login and redirect routes
-app.get('/login', passport.authenticate('google', {
-  scope: ['profile', 'email'],
-}));
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.get('/googleRedirect', passport.authenticate('google'), (req, res) => {
-  // will redirect once the request has been handled
-  res.redirect('/profile');
-});
+const port = 8080;
 
-// setting up our Google Strategy when we get the profile info back from Google
-passport.use(new GoogleStrategy({
-  // options for the google strategy
-  callbackURL: '/googleRedirect',
-  clientID: process.env.GOOGLECLIENTID,
-  clientSecret: process.env.GOOGLECLIENTSECRET,
-}, (accessToken, refreshToken, profile, done) => {
-  // passport callback function
-  const {
-    id: googleId, 
-    displayName: username, 
-    given_name: firstName, 
-    family_name: lastName, 
-    picture: photo, 
-    email: email,
-  } = profile;
+app.get("/", (req, res) => {
+    res.json({message: "You are not logged in"})
+})
 
-  const user = {
-    googleId,
-    username,
-    firstName,
-    lastName,
-    photo,
-    email,
-  };
+app.get("/failed", (req, res) => {
+    res.send("Failed")
+})
+app.get("/success",isLoggedIn, (req, res) => {
+    res.send(`Welcome ${req.user.email}`)
+})
 
-  getUser(googleId)
-    .then(currentUser => {
-      currentUser;
+app.get('/google',
+    passport.authenticate('google', {
+            scope:
+                ['email', 'profile']
+        }
+    ));
 
-      // if the response includes a user object from our database
-      if (currentUser.length) {
-        done(null, currentUser[0]);
-      } else {
-      // if not, create a new user in the database
-        createUser(user);
-        getUser(googleId)
-          .then(newUser => {
-            newUser;
-            done(null, newUser[0]);
-          })
-          .catch(err => console.log(err));
-      }
-    });
-}));
+app.get('/google/callback',
+    passport.authenticate('google', {
+        failureRedirect: '/failed',
+    }),
+    function (req, res) {
+        res.redirect('/success')
 
-// assigning the port to 8000
-const port = 8000;
+    }
+);
 
-// calling the listen method on app with a callback that will execute if the server is running and tell us what port
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-});
+app.get("/logout", (req, res) => {
+    req.session = null;
+    req.logout();
+    res.redirect('/');
+})
+
+app.listen(port, () => console.log("server running on port",  port))
