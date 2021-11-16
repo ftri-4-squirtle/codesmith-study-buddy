@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+
 import styles from './PostPreview.module.css';
 
 export default function PostPreview(props) {
@@ -11,8 +13,13 @@ export default function PostPreview(props) {
 				<span>{props.data.category}</span>
 				<span>{props.data.company}</span>
 			</p>
-			<p>
-				{props.data.body.substring(0, 50).concat('... ')} <Link to='/viewpost'>more</Link>
+			<p className={styles.firstLine}>
+				<span>{props.data.body.substring(0, 50).concat('... ')}</span>
+				<span>
+					<Button color='primary' variant='contained' type='button'>
+						More
+					</Button>
+				</span>
 			</p>
 		</div>
 	);

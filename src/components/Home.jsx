@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import PostPreview from './PostPreview.jsx';
+import { previewOff, previewOn, buttonLess, buttonMore } from '../state-slices/bodyPreviewSlice';
 
 const DUMMY_DATA = [
 	{
@@ -22,7 +24,19 @@ const DUMMY_DATA = [
 
 // redux store?
 
-export default function Home() {
+function mapStateToProps(state) {
+	const { body, button } = state;
+	return { body, button };
+}
+
+const mapDispatchToProps = {
+	previewOff,
+	previewOn,
+	buttonLess,
+	buttonMore,
+};
+
+function Home() {
 	const previews = DUMMY_DATA.map((data, index) => {
 		return (
 			<div>
@@ -50,3 +64,5 @@ export default function Home() {
 		</div>
 	);
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

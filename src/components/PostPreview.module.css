@@ -8,3 +8,8 @@
 	display: flex;
 	justify-content: space-between;
 }
+
+.secondLine {
+	display: flex;
+	justify-content: space-between;
+}
