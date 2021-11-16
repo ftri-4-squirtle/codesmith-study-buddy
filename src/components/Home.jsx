@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import PostPreview from './PostPreview.jsx';
-import { previewOff, previewOn, buttonLess, buttonMore } from '../state-slices/bodyPreviewSlice';
+import { updateBody, previewOff, previewOn, buttonLess, buttonMore } from '../state-slices/bodyPreviewSlice';
 
 const DUMMY_DATA = [
 	{
@@ -22,33 +22,41 @@ const DUMMY_DATA = [
 	},
 ];
 
-function mapStateToProps(state) {
-	const { body, button } = state;
-	return { body, button };
-}
+// function mapStateToProps(state) {
+// 	const { body, button } = state;
+// 	return { body, button };
+// }
 
-const mapDispatchToProps = {
-	previewOff,
-	previewOn,
-	buttonLess,
-	buttonMore,
-};
+// const mapDispatchToProps = {
+// 	previewOff,
+// 	previewOn,
+// 	buttonLess,
+// 	buttonMore,
+// };
 
 function Home() {
 	const bodyPreview = useSelector((state) => state.bodyPreview.body);
 	const dispatch = useDispatch();
 
-	function togglePreview(e) {
-		console.log(dispatch(previewOn(DUMMY_DATA)));
-		console.log(bodyPreview);
-		console.log(e);
-		console.log(e.target);
+	dispatch(updateBody(DUMMY_DATA));
+	console.log('bodyPreview1', bodyPreview.body);
+
+	// setInterval(() => {
+	// 	console.log('interval', dispatch(updateBody(DUMMY_DATA)));
+	// 	console.log('bodypreview', bodyPreview);
+	// }, 5000);
+
+	function togglePreview(e, data) {
+		dispatch(previewOn(data));
+		console.log('bodyPreview2', bodyPreview);
+		// console.log(e);
+		// console.dir(e.target.innerText);
 	}
 
 	const previews = DUMMY_DATA.map((data, index) => {
 		return (
 			<div>
-				<PostPreview key={index} data={data} togglePreview={togglePreview} />
+				<PostPreview index={index} key={'key' + index} data={data} togglePreview={togglePreview} />
 			</div>
 		);
 	});
@@ -73,4 +81,5 @@ function Home() {
 	);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+// export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;

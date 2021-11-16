@@ -1,11 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 
 import styles from './PostPreview.module.css';
 
 export default function PostPreview(props) {
-	// console.log(props);
+	const currentButton = useSelector((state) => state.bodyPreview.button);
+
+	const payload = Object.assign({}, props.data);
+	console.log('post', payload);
+	payload['index'] = props.index;
+
 	return (
 		<div className={styles.mainContainer}>
 			<p className={styles.firstLine}>
@@ -16,7 +22,7 @@ export default function PostPreview(props) {
 			<p className={styles.firstLine}>
 				<span>{props.data.body.substring(0, 50).concat('... ')}</span>
 				<span>
-					<Button color='primary' variant='contained' type='button' onClick={(e) => props.togglePreview(e)}>
+					<Button color='primary' variant='contained' type='button' onClick={(e) => props.togglePreview(e, payload)}>
 						More
 					</Button>
 				</span>
