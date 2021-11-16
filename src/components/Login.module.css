@@ -1,0 +1,30 @@
+.mainContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 95vh;
+}
+
+.loginContainer {
+	border: 1px solid black;
+	height: 400px;
+	width: 400px;
+	padding: 10px;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	height: 100%;
+}
+
+.textfield {
+	margin: 5px 0 !important;
+}
+
+.button {
+	margin: 10px 0 !important;
+}
