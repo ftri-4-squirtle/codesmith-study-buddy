@@ -39,8 +39,10 @@ function Home() {
 	const dispatch = useDispatch();
 
 	function togglePreview(e) {
-		console.log(dispatch(previewOn()));
+		console.log(dispatch(previewOn(DUMMY_DATA)));
 		console.log(bodyPreview);
+		console.log(e);
+		console.log(e.target);
 	}
 
 	const previews = DUMMY_DATA.map((data, index) => {

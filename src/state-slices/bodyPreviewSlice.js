@@ -14,9 +14,9 @@ export const bodyPreviewSlice = createSlice({
 			// immutable state based off those changes
 			state.body = 'off'; //DUMMY_DATA[key].body;
 		},
-		previewOn: (state) => {
+		previewOn: (state, action) => {
 			console.log('preview on action!!');
-			state.body = 'on'; //DUMMY_DATA[key].body.substring(0, 50).concat('... ');
+			state.body = 'on' + action.payload; //DUMMY_DATA[key].body.substring(0, 50).concat('... ');
 		},
 		buttonLess: (state) => {
 			state.button = 'LESS';
