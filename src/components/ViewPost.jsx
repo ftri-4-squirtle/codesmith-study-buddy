@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+// THIS COMPONENT IS NOT USED IN ITS CURRENT VERSION
+
 export default function ViewPost() {
 	return (
 		<div>

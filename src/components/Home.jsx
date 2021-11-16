@@ -21,15 +21,10 @@ const DUMMY_DATA = [
 ];
 
 function Home() {
-	function togglePreview(e, data) {
-		console.log(e);
-		console.dir(e.target.innerText);
-	}
-
 	const previews = DUMMY_DATA.map((data, index) => {
 		return (
 			<div key={index}>
-				<PostPreview index={index} data={data} togglePreview={togglePreview} />
+				<PostPreview index={index} data={data} />
 			</div>
 		);
 	});
@@ -40,9 +35,6 @@ function Home() {
 			{previews}
 			<p>
 				<Link to='/'>login</Link>
-			</p>
-			<p>
-				<Link to='/viewpost'>viewpost</Link>
 			</p>
 			<p>
 				<Link to='/createpost'>createpost</Link>
