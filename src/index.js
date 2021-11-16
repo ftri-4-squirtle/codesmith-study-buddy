@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-ReactDOM.render(
-    <h1>Hello Team Squirtle!!!</h1>,
-  document.getElementById('root')
-);
+import App from './components/App.jsx';
+
+ReactDOM.render(<App />, document.getElementById('root'));
