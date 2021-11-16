@@ -10,7 +10,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.?js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
@@ -38,4 +38,11 @@ module.exports = {
       template: path.join(__dirname, "src", "index.html"),
     }),
   ],
+  devServer: {
+    publicPath: '/',
+    proxy: {
+      '/**': { target: 'http://localhost:3000' },
+    },
+    hot: true,
+  },
 }
