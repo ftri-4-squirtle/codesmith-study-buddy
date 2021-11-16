@@ -1,5 +1,16 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Login from './Login.jsx';
 
 export default function App() {
-	return <h1>Hello Team Squirtle!!!!!</h1>;
+	return (
+		<BrowserRouter>
+			<div>
+				<h1>Hi Team Squirtle!</h1>
+				<Routes>
+					<Route path='/' element={<Login />} />
+				</Routes>
+			</div>
+		</BrowserRouter>
+	);
 }
