@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import styles from './PostPreview.module.css';
 
 export default function PostPreview(props) {
-	console.log(props);
+	// console.log(props);
 	return (
 		<div className={styles.mainContainer}>
 			<p className={styles.firstLine}>
@@ -16,7 +16,7 @@ export default function PostPreview(props) {
 			<p className={styles.firstLine}>
 				<span>{props.data.body.substring(0, 50).concat('... ')}</span>
 				<span>
-					<Button color='primary' variant='contained' type='button'>
+					<Button color='primary' variant='contained' type='button' onClick={(e) => props.togglePreview(e)}>
 						More
 					</Button>
 				</span>

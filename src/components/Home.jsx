@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import PostPreview from './PostPreview.jsx';
 import { previewOff, previewOn, buttonLess, buttonMore } from '../state-slices/bodyPreviewSlice';
 
@@ -22,8 +22,6 @@ const DUMMY_DATA = [
 	},
 ];
 
-// redux store?
-
 function mapStateToProps(state) {
 	const { body, button } = state;
 	return { body, button };
@@ -37,14 +35,22 @@ const mapDispatchToProps = {
 };
 
 function Home() {
+	const bodyPreview = useSelector((state) => state.bodyPreview.body);
+	const dispatch = useDispatch();
+
+	function togglePreview(e) {
+		console.log(dispatch(previewOn()));
+		console.log(bodyPreview);
+	}
+
 	const previews = DUMMY_DATA.map((data, index) => {
 		return (
 			<div>
-				<PostPreview key={index} data={data} />
+				<PostPreview key={index} data={data} togglePreview={togglePreview} />
 			</div>
 		);
 	});
-	console.log(previews);
+	// console.log(previews);
 	return (
 		<div>
 			<h1>Hi, this is the Home page!</h1>
