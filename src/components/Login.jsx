@@ -56,10 +56,10 @@ export default function Login() {
 						</Button>
 					</div>
 					<div>
-						<Button color='primary' variant='contained' fullWidth type='button' className={styles.button}>
+						<Button color='secondary' variant='contained' fullWidth type='button' className={styles.button}>
 							Sign in using Google
 						</Button>
-						<Button color='primary' variant='contained' fullWidth type='button' className={styles.button}>
+						<Button color='secondary' variant='contained' fullWidth type='button' className={styles.button} disabled>
 							Sign in using Github
 						</Button>
 					</div>

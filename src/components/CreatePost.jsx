@@ -73,8 +73,6 @@ export default function CreatePost() {
 					onChange={formik.handleChange}
 					error={formik.touched.title && Boolean(formik.errors.title)}
 					helperText={formik.touched.title && formik.errors.title}
-					className={styles.formField}
-					// sx={{ '& .MuiTextField-root': { m: 5, p: 5 } }}
 					variant='outlined'
 					margin='normal'
 				/>

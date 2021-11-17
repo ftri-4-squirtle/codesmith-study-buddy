@@ -44,7 +44,7 @@ export default function Navbar() {
 			open={isMenuOpen}
 			onClose={handleMenuClose}
 			className={styles.accountModal}
-			sx={{ '& .MuiMenu-paper': { height: 'auto', width: '100px' } }}
+			sx={{ '& .MuiMenu-paper': { height: 'auto', width: '100px', p: 1 } }}
 		>
 			<Link to='/myaccount' className={styles.links}>
 				<MenuItem onClick={handleMenuClose}>My account</MenuItem>
@@ -71,7 +71,7 @@ export default function Navbar() {
 								</Badge>
 							</IconButton>
 						</Link>
-						<IconButton size='large' aria-label='filter' color='inherit' sx={{ m: 2 }}>
+						<IconButton size='large' aria-label='filter' color='inherit' sx={{ m: 2 }} disabled>
 							<Badge badgeContent={0} color='error'>
 								<FilterListIcon style={{ fontSize: 35 }} />
 							</Badge>
