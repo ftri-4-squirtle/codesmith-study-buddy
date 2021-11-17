@@ -11,11 +11,11 @@ export default function PostPreview(props) {
 		<div className={styles.mainContainer}>
 			<p className={styles.firstLine}>
 				<span>{props.data.title}</span>
-				<span>{props.data.category}</span>
-				<span>{props.data.company}</span>
+				<span>{props.data.topic_id}</span>
+				<span>{props.data.company_id}</span>
 			</p>
 			<p className={styles.firstLine}>
-				<span>{preview ? props.data.body.substring(0, 50).concat('... ') : props.data.body}</span>
+				<span>{preview ? props.data.content.substring(0, 50).concat('... ') : props.data.content}</span>
 				<span>
 					<Button
 						color='primary'

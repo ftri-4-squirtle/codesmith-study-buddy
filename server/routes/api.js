@@ -8,6 +8,7 @@ router.get('/posts', apiController.getPosts, (req, res) => {
     if(!res.locals.posts) {
         res.status(500).json({message: 'No posts found'});
     }
+    console.log(res.locals.posts);
     res.status(200).json(res.locals.posts);
 })
 

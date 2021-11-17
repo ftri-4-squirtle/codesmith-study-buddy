@@ -40,7 +40,7 @@ module.exports = {
 		}),
 	],
 	devServer: {
-		publicPath: '/',
+		publicPath: '/src',
 		proxy: {
 			'/**': { target: 'http://localhost:3000' },
 		},
