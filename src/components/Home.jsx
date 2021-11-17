@@ -3,16 +3,6 @@ import { Link } from 'react-router-dom';
 import PostPreview from './PostPreview.jsx';
 
 
-
-// const DUMMY_DATA = await fetch('/api/posts', {
-//   method: 'GET',
-//   headers: {
-//     'Content-type': 'application/json'
-//   }
-// });
-
-// console.log(DUMMY_DATA);
-
 function Home() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
