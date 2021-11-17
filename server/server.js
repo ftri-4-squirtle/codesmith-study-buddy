@@ -1,12 +1,15 @@
 const express = require('express');
 const passport = require('passport');
 const cookieSession = require('cookie-session');
+const path = require('path');
 
 require('dotenv').config();
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const apiRouter = require('./routes/api.js');
 
 const app = express();
+
+const port = 3000;
 
 app.use(express.json());
 
@@ -15,20 +18,22 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(user, done) {
-        done(null, user);
+    done(null, user);
 });
 
 passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLECLIENTID,
         clientSecret: process.env.GOOGLECLIENTSECRET,
-        callbackURL: "http://localhost:8080/google/callback",
+        callbackURL: 'http://localhost:8080/google/callback', 
         passReqToCallback   : true
-    },
-    function(request, accessToken, refreshToken, profile, done) {
-            return done(null, profile);
+      },
+      function(request, accessToken, refreshToken, profile, done) {
+        console.log(profile);
+
+        return done(null, profile);
+                
     }
 ));
-
 
 app.use(cookieSession({
   name: 'google-auth-session',
@@ -46,13 +51,8 @@ const isLoggedIn = (req, res, next) => {
 app.use(passport.initialize());
 app.use(passport.session());
 
-const port = 8080;
-
 app.get("/", (req, res) => {
-
-    // serve index.html
-
-    res.json({message: "You are not logged in"})
+    res.status(200).sendFile(path.join(__dirname, '../dist/index.html'));
 })
 
 app.get("/failed", (req, res) => {
@@ -66,18 +66,18 @@ app.get("/success",isLoggedIn, (req, res) => {
 
 
 app.get('/googleAuth', 
-passport.authenticate('google', {
-    scope: ['email', 'profile']
-})
+  passport.authenticate('google', {
+      scope: ['email', 'profile']
+  })
 );
 
 app.get('/google/callback',
-passport.authenticate('google', {
-    failureRedirect: '/failed',
-}),
-function (req, res) {
-    res.status(401).send({message: 'Unauthorized'});
-}
+  passport.authenticate('google', {
+      failureRedirect: '/failed',
+  }),
+  function (req, res) {
+      res.redirect('/');
+  }
 );
 
 app.get("/logout", (req, res) => {
@@ -88,5 +88,6 @@ app.get("/logout", (req, res) => {
 
 // api routes
 app.use("/api", apiRouter);
+
 
 app.listen(port, () => console.log("server running on port",  port))
