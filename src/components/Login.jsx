@@ -65,7 +65,6 @@ export default function Login() {
 					</div>
 				</form>
 			</section>
-			<Link to='/home'>home</Link>
 		</div>
 	);
 }

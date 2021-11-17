@@ -12,7 +12,7 @@ import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import styles from './Navbar.module.css';
-import { display } from '@mui/system';
+// import { display } from '@mui/system';
 
 export default function Navbar() {
 	const [anchorEl, setAnchorEl] = React.useState(null);
@@ -44,9 +44,11 @@ export default function Navbar() {
 			open={isMenuOpen}
 			onClose={handleMenuClose}
 			className={styles.accountModal}
-			// sx={{ '& .MuiMenu-paper': { display: flex } }}
+			sx={{ '& .MuiMenu-paper': { height: 'auto', width: '100px' } }}
 		>
-			<MenuItem onClick={handleMenuClose}>My account</MenuItem>
+			<Link to='/myaccount' className={styles.links}>
+				<MenuItem onClick={handleMenuClose}>My account</MenuItem>
+			</Link>
 			<MenuItem onClick={handleMenuClose}>Logout</MenuItem>
 		</Menu>
 	);
@@ -74,11 +76,9 @@ export default function Navbar() {
 								<FilterListIcon style={{ fontSize: 35 }} />
 							</Badge>
 						</IconButton>
-						<Link to='/myaccount' className={styles.links}>
-							<IconButton size='large' edge='end' aria-label='account of current user' aria-controls={menuId} aria-haspopup='true' onClick={handleProfileMenuOpen} color='inherit' sx={{ m: 2 }}>
-								<AccountCircle style={{ fontSize: 35 }} />
-							</IconButton>
-						</Link>
+						<IconButton size='large' edge='end' aria-label='account of current user' aria-controls={menuId} aria-haspopup='true' onClick={handleProfileMenuOpen} color='inherit' sx={{ m: 2 }}>
+							<AccountCircle style={{ fontSize: 35 }} />
+						</IconButton>
 					</Box>
 				</Toolbar>
 			</AppBar>
