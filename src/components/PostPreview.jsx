@@ -10,10 +10,22 @@ export default function PostPreview(props) {
 	return (
 		<div className={styles.mainContainer}>
 			<p className={styles.firstLine}>
-				<span>{props.data.title}</span>
-				<span>{props.data.difficulty}</span>
-				<span>{props.data.topic_id}</span>
-				<span>{props.data.company_id}</span>
+				<span>
+					<strong>Title:</strong> {props.data.title}
+				</span>
+				<span>
+					<strong>Difficulty:</strong> {props.data.difficulty}
+				</span>
+			</p>
+			<p className={styles.firstLine}>
+				{/* <span><strong>Topic:</strong> {props.data.topic_id}</span>
+				<span><strong>Company:</strong> {props.data.company_id}</span> */}
+				<span>
+					<strong>Topic:</strong> Algorithms
+				</span>
+				<span>
+					<strong>Company:</strong> Google
+				</span>
 			</p>
 			<p className={styles.firstLine}>
 				<span>{preview ? props.data.content.substring(0, 50).concat('... ') : props.data.content}</span>

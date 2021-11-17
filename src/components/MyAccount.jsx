@@ -21,11 +21,11 @@ export default function MyAccount() {
 
 			<div className={styles.account}>
 				<div className={styles.accountLabels}>
-					<p>Username: </p>
-					<p>Email: </p>
-					<p>Cohort:</p>
-					<p>Status: </p>
-					<p>Employer: </p>
+					<p><strong>Name: </strong></p>
+					<p><strong>Email: </strong></p>
+					<p><strong>Cohort:</strong></p>
+					<p><strong>Status: </strong></p>
+					<p><strong>Employer: </strong></p>
 				</div>
 
 				<div className={styles.accountInfo}>

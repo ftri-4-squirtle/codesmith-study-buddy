@@ -70,7 +70,7 @@ export default function CreatePost() {
 					'Content-type': 'application/json',
 					Accept: 'application/json',
 				},
-				body: JSON.stringify({ topic: topicState, difficulty: difficultyState, company: formik.values.company, content: formik.values.content, title: formik.values.title }),
+				body: JSON.stringify({ topics: topicState, difficulty: difficultyState, company: formik.values.company, content: formik.values.content, title: formik.values.title }),
 			})
 				// .then((res) => res.json())
 				.then((data) => {
