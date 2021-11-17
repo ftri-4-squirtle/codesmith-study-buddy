@@ -3,7 +3,7 @@ CREATE TABLE question (
   "title" varchar(180) NOT NULL,
   "content" varchar NOT NULL,
   "date" date NOT NULL DEFAULT NOW(),
-  "difficulty" varchar(20) NOT NULL ,
+  "difficulty" varchar(20) NOT NULL,
   "company_id" bigint,
   "topic_id" bigint
 )

@@ -8,6 +8,7 @@ const apiRouter = require('./routes/api.js');
 
 const app = express();
 
+app.use(express.json());
 
 passport.serializeUser(function(user, done) {
     done(null, user);
