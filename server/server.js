@@ -11,17 +11,17 @@ const app = express();
 app.use(express.json());
 
 passport.serializeUser(function(user, done) {
-    done(null, user);
+  done(null, user);
 });
 
 passport.deserializeUser(function(user, done) {
-        done(null, user);
+  done(null, user);
 });
 
 passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLECLIENTID,
         clientSecret: process.env.GOOGLECLIENTSECRET,
-        callbackURL: "http://localhost:8080/google/callback",
+        callbackURL: "http://localhost:3000/google/callback",
         passReqToCallback   : true
     },
     function(request, accessToken, refreshToken, profile, done) {
@@ -46,7 +46,7 @@ const isLoggedIn = (req, res, next) => {
 app.use(passport.initialize());
 app.use(passport.session());
 
-const port = 8080;
+const port = 3000;
 
 app.get("/", (req, res) => {
 
@@ -64,7 +64,7 @@ app.get("/success",isLoggedIn, (req, res) => {
     res.send(`Welcome ${req.user.email}`)
 })
 
-
+// hit this with Login with Google button
 app.get('/googleAuth', 
 passport.authenticate('google', {
     scope: ['email', 'profile']
@@ -80,6 +80,7 @@ function (req, res) {
 }
 );
 
+// hit this with Logout button
 app.get("/logout", (req, res) => {
     req.session = null;
     req.logout();
