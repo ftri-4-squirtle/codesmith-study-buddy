@@ -1,0 +1,14 @@
+.accountModal {
+	display: flex;
+	flex-direction: column;
+}
+
+.iconContainer {
+	display: flex;
+	justify-content: space-between;
+}
+
+.links {
+	text-decoration: none;
+	color: inherit;
+}
