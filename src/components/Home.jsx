@@ -36,17 +36,8 @@ function Home() {
 
 	return (
 		<div>
-			<h1>Hi, this is the Home page!</h1>
+			<h1>FTRI 4 Interview Questions</h1>
 			{previews}
-			<p>
-				<Link to='/'>login</Link>
-			</p>
-			<p>
-				<Link to='/createpost'>createpost</Link>
-			</p>
-			<p>
-				<Link to='/myaccount'>myaccount</Link>
-			</p>
 		</div>
 	);
 }
