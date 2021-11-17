@@ -1,9 +1,13 @@
 const express = require('express');
 const passport = require('passport');
 const cookieSession = require('cookie-session');
-require('dotenv').config();
 
+require('dotenv').config();
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const apiRouter = require('./routes/api.js');
+
+const app = express();
+
 
 passport.serializeUser(function(user, done) {
     done(null, user);
@@ -24,7 +28,6 @@ passport.use(new GoogleStrategy({
     }
 ));
 
-const app = express();
 
 app.use(cookieSession({
   name: 'google-auth-session',
@@ -45,31 +48,35 @@ app.use(passport.session());
 const port = 8080;
 
 app.get("/", (req, res) => {
+
+    // serve index.html
+
     res.json({message: "You are not logged in"})
 })
 
 app.get("/failed", (req, res) => {
     res.send("Failed")
 })
+
+// set http status to authenticated and serve index.html
 app.get("/success",isLoggedIn, (req, res) => {
     res.send(`Welcome ${req.user.email}`)
 })
 
-app.get('/google',
-    passport.authenticate('google', {
-            scope:
-                ['email', 'profile']
-        }
-    ));
+
+app.get('/googleAuth', 
+passport.authenticate('google', {
+    scope: ['email', 'profile']
+})
+);
 
 app.get('/google/callback',
-    passport.authenticate('google', {
-        failureRedirect: '/failed',
-    }),
-    function (req, res) {
-        res.redirect('/success')
-
-    }
+passport.authenticate('google', {
+    failureRedirect: '/failed',
+}),
+function (req, res) {
+    res.status(401).send({message: 'Unauthorized'});
+}
 );
 
 app.get("/logout", (req, res) => {
@@ -77,5 +84,8 @@ app.get("/logout", (req, res) => {
     req.logout();
     res.redirect('/');
 })
+
+// api routes
+app.use("/api", apiRouter);
 
 app.listen(port, () => console.log("server running on port",  port))
