@@ -6,6 +6,11 @@
 	height: 95vh;
 }
 
+.mainHeader {
+	font-size: 40px;
+	color: navy;
+}
+
 .loginContainer {
 	border: 1px solid black;
 	height: 400px;
