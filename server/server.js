@@ -14,7 +14,7 @@ const port = 3000;
 app.use(express.json());
 
 passport.serializeUser(function(user, done) {
-    done(null, user);
+  done(null, user);
 });
 
 passport.deserializeUser(function(user, done) {
@@ -64,7 +64,7 @@ app.get("/success",isLoggedIn, (req, res) => {
     res.send(`Welcome ${req.user.email}`)
 })
 
-
+// hit this with Login with Google button
 app.get('/googleAuth', 
   passport.authenticate('google', {
       scope: ['email', 'profile']
@@ -80,6 +80,7 @@ app.get('/google/callback',
   }
 );
 
+// hit this with Logout button
 app.get("/logout", (req, res) => {
     req.session = null;
     req.logout();
