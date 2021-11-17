@@ -14,8 +14,8 @@ import Navbar from './Navbar.jsx';
 export default function App() {
 	return (
 		<div>
-			<Navbar />
 			<BrowserRouter>
+				<Navbar />
 				<Container className={styles.container}>
 					<Routes>
 						<Route path='/' element={<Login />} />
