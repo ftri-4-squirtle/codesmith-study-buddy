@@ -25,7 +25,6 @@ export default function Login() {
 
 	return (
 		<div className={styles.mainContainer}>
-			<h1>Codesmith Study Buddy</h1>
 			<section className={styles.loginContainer}>
 				<form onSubmit={formik.handleSubmit} className={styles.form}>
 					<div>
@@ -57,16 +56,15 @@ export default function Login() {
 						</Button>
 					</div>
 					<div>
-						<Button color='primary' variant='contained' fullWidth type='button' className={styles.button}>
+						<Button color='secondary' variant='contained' fullWidth type='button' className={styles.button}>
 							Sign in using Google
 						</Button>
-						<Button color='primary' variant='contained' fullWidth type='button' className={styles.button}>
+						<Button color='secondary' variant='contained' fullWidth type='button' className={styles.button} disabled>
 							Sign in using Github
 						</Button>
 					</div>
 				</form>
 			</section>
-			<Link to='/home'>home</Link>
 		</div>
 	);
 }
