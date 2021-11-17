@@ -25,7 +25,6 @@ export default function Login() {
 
 	return (
 		<div className={styles.mainContainer}>
-			<h1>Codesmith Study Buddy</h1>
 			<section className={styles.loginContainer}>
 				<form onSubmit={formik.handleSubmit} className={styles.form}>
 					<div>
