@@ -24,36 +24,64 @@ const MenuProps = {
 	},
 };
 
-const categories = ['Algorithms', 'System Design', 'Behavioral', 'JavaScript', 'React'];
+const topics = ['Algorithms', 'System Design', 'Behavioral', 'JavaScript', 'React'];
+const difficulties = ['Easy', 'Medium', 'Hard'];
 
 export default function CreatePost() {
-	const [categoryState, setCategoryState] = useState([]);
+	const [topicState, setTopicState] = useState([]);
+	const [difficultyState, setDifficultyState] = useState('');
 
-	const handleChange = (event) => {
+	const handleTopicChange = (event) => {
 		const {
 			target: { value },
 		} = event;
-		setCategoryState(
+		setTopicState(
 			// On autofill we get a the stringified value.
 			typeof value === 'string' ? value.split(',') : value
+		);
+	};
+
+	const handleDifficultyChange = (event) => {
+		const {
+			target: { value },
+		} = event;
+		setDifficultyState(
+			// On autofill we get a the stringified value.
+			// typeof value === 'string' ? value.split(',') : value
+			value
 		);
 	};
 
 	const formik = useFormik({
 		initialValues: {
 			title: '',
-			category: '',
 			company: '',
-			body: '',
+			content: '',
 		},
 		validationSchema: Yup.object({
 			title: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
-			category: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
 			company: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
-			body: Yup.string().min(10, 'Must be 10 characters or more').required('Required'),
+			content: Yup.string().min(10, 'Must be 10 characters or more').required('Required'),
 		}),
-		onSubmit: (values) => {
-			alert(JSON.stringify(values, null, 2));
+		onSubmit: (values, actions) => {
+			fetch('/api/posts', {
+				method: 'POST',
+				headers: {
+					'Content-type': 'application/json',
+					Accept: 'application/json',
+				},
+				body: JSON.stringify({ topic: topicState, difficulty: difficultyState, company: formik.values.company, content: formik.values.content, title: formik.values.title }),
+			})
+				// .then((res) => res.json())
+				.then((data) => {
+					if (data.status === 200) {
+						setTopicState([]);
+						setDifficultyState('');
+						actions.resetForm();
+						alert('Successfully Submitted!');
+					}
+				})
+				.catch((err) => console.log('POST REQUEST ERROR: ', err));
 		},
 	});
 
@@ -94,21 +122,21 @@ export default function CreatePost() {
 
 				<div>
 					<FormControl sx={{ m: 1, width: '100%' }}>
-						<InputLabel id='demo-multiple-checkbox-label'>Choose Category</InputLabel>
+						<InputLabel id='demo-multiple-checkbox-label'>Topics</InputLabel>
 						<Select
-							labelId='demo-multiple-checkbox-label'
-							id='demo-multiple-checkbox'
+							labelId='multiple-checkbox-label'
+							id='multiple-checkbox'
 							multiple
 							fullWidth
-							value={categoryState}
-							onChange={handleChange}
-							input={<OutlinedInput label='category' />}
+							value={topicState}
+							onChange={handleTopicChange}
+							input={<OutlinedInput label='topic' />}
 							renderValue={(selected) => selected.join(', ')}
 							MenuProps={MenuProps}
 						>
-							{categories.map((name) => (
+							{topics.map((name) => (
 								<MenuItem key={name} value={name}>
-									<Checkbox checked={categoryState.indexOf(name) > -1} />
+									<Checkbox checked={topicState.indexOf(name) > -1} />
 									<ListItemText primary={name} />
 								</MenuItem>
 							))}
@@ -132,25 +160,48 @@ export default function CreatePost() {
 					margin='normal'
 				/>
 
+				<div>
+					<FormControl sx={{ m: 1, width: '100%' }}>
+						<InputLabel id='demo-multiple-checkbox-label'>Difficulty Level</InputLabel>
+						<Select
+							labelId='single-checkbox-label'
+							id='single-checkbox'
+							fullWidth
+							value={difficultyState}
+							onChange={handleDifficultyChange}
+							input={<OutlinedInput label='difficulty' />}
+							renderValue={(selected) => selected}
+							MenuProps={MenuProps}
+						>
+							{difficulties.map((name) => (
+								<MenuItem key={name} value={name}>
+									<Checkbox checked={difficultyState.indexOf(name) > -1} />
+									<ListItemText primary={name} />
+								</MenuItem>
+							))}
+						</Select>
+					</FormControl>
+				</div>
+
 				{/* <label htmlFor='body'>Body</label>
 				<input id='body' name='body' type='text' onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.body} />
 				{formik.touched.body && formik.errors.body ? <div>{formik.errors.body}</div> : null} */}
 				<TextField
 					fullWidth
-					id='body'
-					name='body'
-					label='Body'
+					id='content'
+					name='content'
+					label='Content'
 					multiline
 					rows={4}
-					value={formik.values.body}
+					value={formik.values.content}
 					onChange={formik.handleChange}
-					error={formik.touched.body && Boolean(formik.errors.body)}
-					helperText={formik.touched.body && formik.errors.body}
+					error={formik.touched.content && Boolean(formik.errors.content)}
+					helperText={formik.touched.content && formik.errors.content}
 					variant='outlined'
 					margin='normal'
 				/>
 
-				<Button color='primary' variant='contained' type='button'>
+				<Button color='primary' variant='contained' type='submit'>
 					Submit
 				</Button>
 			</form>

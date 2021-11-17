@@ -5,7 +5,7 @@ const apiController = {};
 //---getPosts---//
 apiController.getPosts = (req, res, next) => {
 
-   const queryAll = 'SELECT * FROM post';
+   const queryAll = 'SELECT * FROM question';
     db.query(queryAll, (err, dbResponse) => {
         if(err) {
           next({
