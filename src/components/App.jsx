@@ -13,7 +13,7 @@ import Navbar from './Navbar.jsx';
 
 export default function App() {
 	return (
-		<div>
+		<div className={styles.App}>
 			<BrowserRouter>
 				<Navbar />
 				<Container className={styles.container}>
