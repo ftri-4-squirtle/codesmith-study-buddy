@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect, useSelector, useDispatch } from 'react-redux';
 import PostPreview from './PostPreview.jsx';
-import { updateBody, previewOff, previewOn, buttonLess, buttonMore } from '../state-slices/bodyPreviewSlice';
 
 const DUMMY_DATA = [
 	{
@@ -22,54 +20,21 @@ const DUMMY_DATA = [
 	},
 ];
 
-// function mapStateToProps(state) {
-// 	const { body, button } = state;
-// 	return { body, button };
-// }
-
-// const mapDispatchToProps = {
-// 	previewOff,
-// 	previewOn,
-// 	buttonLess,
-// 	buttonMore,
-// };
-
 function Home() {
-	const bodyPreview = useSelector((state) => state.bodyPreview.body);
-	const dispatch = useDispatch();
-
-	dispatch(updateBody(DUMMY_DATA));
-	console.log('bodyPreview1', bodyPreview.body);
-
-	// setInterval(() => {
-	// 	console.log('interval', dispatch(updateBody(DUMMY_DATA)));
-	// 	console.log('bodypreview', bodyPreview);
-	// }, 5000);
-
-	function togglePreview(e, data) {
-		dispatch(previewOn(data));
-		console.log('bodyPreview2', bodyPreview);
-		// console.log(e);
-		// console.dir(e.target.innerText);
-	}
-
 	const previews = DUMMY_DATA.map((data, index) => {
 		return (
-			<div>
-				<PostPreview index={index} key={'key' + index} data={data} togglePreview={togglePreview} />
+			<div key={index}>
+				<PostPreview index={index} data={data} />
 			</div>
 		);
 	});
-	// console.log(previews);
+
 	return (
 		<div>
 			<h1>Hi, this is the Home page!</h1>
 			{previews}
 			<p>
 				<Link to='/'>login</Link>
-			</p>
-			<p>
-				<Link to='/viewpost'>viewpost</Link>
 			</p>
 			<p>
 				<Link to='/createpost'>createpost</Link>
