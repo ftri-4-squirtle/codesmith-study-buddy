@@ -11,6 +11,7 @@ export default function PostPreview(props) {
 		<div className={styles.mainContainer}>
 			<p className={styles.firstLine}>
 				<span>{props.data.title}</span>
+				<span>{props.data.difficulty}</span>
 				<span>{props.data.topic_id}</span>
 				<span>{props.data.company_id}</span>
 			</p>

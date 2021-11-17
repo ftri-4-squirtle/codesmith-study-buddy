@@ -28,3 +28,7 @@
 .button {
 	margin: 10px 0 !important;
 }
+
+.links {
+	text-decoration: none;
+}

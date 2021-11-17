@@ -56,9 +56,11 @@ export default function Login() {
 						</Button>
 					</div>
 					<div>
-						<Button color='secondary' variant='contained' fullWidth type='button' className={styles.button}>
-							Sign in using Google
-						</Button>
+						<a href='/googleauth' className={styles.links}>
+							<Button color='secondary' variant='contained' fullWidth type='button' className={styles.button}>
+								Sign in using Google
+							</Button>
+						</a>
 						<Button color='secondary' variant='contained' fullWidth type='button' className={styles.button} disabled>
 							Sign in using Github
 						</Button>
