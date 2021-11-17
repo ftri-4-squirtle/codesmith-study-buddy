@@ -16,6 +16,15 @@ import styles from './Navbar.module.css';
 
 export default function Navbar() {
 	const [anchorEl, setAnchorEl] = useState(null);
+	const [user, setUser] = useState({});
+
+	useEffect(() => {
+		fetch('/getUserInfo')
+			.then((res) => res.json())
+			.then((result) => {
+				setUser(result);
+			});
+	}, []);
 
 	const isMenuOpen = Boolean(anchorEl);
 
@@ -88,7 +97,8 @@ export default function Navbar() {
 							color='inherit'
 							sx={{ m: 2 }}
 						>
-							<AccountCircle style={{ fontSize: 35 }} />
+							{<img src={user.picture} width='35' height='35' /> || <AccountCircle style={{ fontSize: 35 }} />}
+							{/* <AccountCircle style={{ fontSize: 35 }} /> */}
 						</IconButton>
 					</Box>
 				</Toolbar>
