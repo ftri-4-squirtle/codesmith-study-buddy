@@ -51,8 +51,13 @@ const isLoggedIn = (req, res, next) => {
 app.use(passport.initialize());
 app.use(passport.session());
 
+// could use regex to serve the same file for multiple endpoints, but splitting it up for readability
 app.get("/", (req, res) => {
     res.status(200).sendFile(path.join(__dirname, '../dist/index.html'));
+})
+
+app.get("/home", (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, '../dist/index.html'));
 })
 
 app.get("/failed", (req, res) => {
@@ -76,7 +81,7 @@ app.get('/google/callback',
       failureRedirect: '/failed',
   }),
   function (req, res) {
-      res.redirect('/');
+      res.redirect('/home');
   }
 );
 
