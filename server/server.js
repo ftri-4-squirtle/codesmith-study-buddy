@@ -5,13 +5,18 @@ const path = require('path');
 
 require('dotenv').config();
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
-const apiRouter = require('./routes/api.js');
+const postsRouter = require('./routes/posts.js');
+const usersRouter = require('./routes/users.js');
 
 const app = express();
 
 const port = 3000;
 
 app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
+
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -28,7 +33,6 @@ passport.use(new GoogleStrategy({
         passReqToCallback   : true
       },
       function(request, accessToken, refreshToken, profile, done) {
-        console.log(profile);
         userProfile = profile;
         return done(null, profile);
                 
@@ -97,7 +101,7 @@ app.get("/logout", (req, res) => {
 })
 
 // api routes
-app.use("/api", apiRouter);
-
+app.use("/api/posts", postsRouter);
+app.use("/api/users", usersRouter);
 
 app.listen(port, () => console.log("server running on port",  port))
