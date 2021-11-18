@@ -33,7 +33,6 @@ passport.use(new GoogleStrategy({
         passReqToCallback   : true
       },
       function(request, accessToken, refreshToken, profile, done) {
-        console.log(profile);
         userProfile = profile;
         return done(null, profile);
                 
@@ -102,7 +101,7 @@ app.get("/logout", (req, res) => {
 })
 
 // api routes
-app.use("/posts", postsRouter);
-app.use("/users", usersRouter);
+app.use("/api/posts", postsRouter);
+app.use("/api/users", usersRouter);
 
 app.listen(port, () => console.log("server running on port",  port))

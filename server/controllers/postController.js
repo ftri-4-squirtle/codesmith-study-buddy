@@ -16,8 +16,6 @@ postsController.getPosts = (req, res, next) => {
           });
         }
         
-        console.log(dbResponse);
-
         res.locals.posts = dbResponse.rows;
         return next();
     });
