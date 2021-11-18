@@ -19,12 +19,13 @@ export default function Login() {
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values) => {
-			alert(JSON.stringify(values, null, 2));
+			alert('Please use Google OAuth');
 		},
 	});
 
 	return (
 		<div className={styles.mainContainer}>
+			<h1 className={styles.mainHeader}>Welcome to CS Study Buddy!</h1>
 			<section className={styles.loginContainer}>
 				<form onSubmit={formik.handleSubmit} className={styles.form}>
 					<div>
@@ -56,9 +57,11 @@ export default function Login() {
 						</Button>
 					</div>
 					<div>
-						<Button color='secondary' variant='contained' fullWidth type='button' className={styles.button}>
-							Sign in using Google
-						</Button>
+						<a href='/googleauth' className={styles.links}>
+							<Button color='secondary' variant='contained' fullWidth type='button' className={styles.button}>
+								Sign in using Google
+							</Button>
+						</a>
 						<Button color='secondary' variant='contained' fullWidth type='button' className={styles.button} disabled>
 							Sign in using Github
 						</Button>

@@ -28,13 +28,16 @@ if (error) {
   } else if (!isLoaded) {
     return <div>Loading...</div>;
   } else {
-    const previews = data.map((prompt, index) => {
-      return (
-        <div key={index}>
-          <PostPreview data={prompt}/>
+    const previews = [];
+    
+    for (let i = data.length-1; i>=0; i--) {
+      previews.push(
+        <div key={i}>
+          <PostPreview data={data[i]}/>
         </div>
-      );
-    });
+      )
+    }
+
     return (
       <div>
         <h1>FTRI 4 Interview Questions</h1>

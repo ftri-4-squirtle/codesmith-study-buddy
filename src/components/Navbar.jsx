@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -15,7 +15,16 @@ import styles from './Navbar.module.css';
 // import { display } from '@mui/system';
 
 export default function Navbar() {
-	const [anchorEl, setAnchorEl] = React.useState(null);
+	const [anchorEl, setAnchorEl] = useState(null);
+	const [user, setUser] = useState({});
+
+	useEffect(() => {
+		fetch('/getUserInfo')
+			.then((res) => res.json())
+			.then((result) => {
+				setUser(result);
+			});
+	}, []);
 
 	const isMenuOpen = Boolean(anchorEl);
 
@@ -76,8 +85,20 @@ export default function Navbar() {
 								<FilterListIcon style={{ fontSize: 35 }} />
 							</Badge>
 						</IconButton>
-						<IconButton size='large' edge='end' aria-label='account of current user' aria-controls={menuId} aria-haspopup='true' onClick={handleProfileMenuOpen} color='inherit' sx={{ m: 2 }}>
-							<AccountCircle style={{ fontSize: 35 }} />
+						<IconButton
+							size='large'
+							edge='end'
+							aria-label='account of current user'
+							aria-controls={menuId}
+							aria-haspopup='true'
+							onClick={(e) => {
+								handleProfileMenuOpen(e);
+							}}
+							color='inherit'
+							sx={{ m: 2 }}
+						>
+							{<img src={user.picture} width='35' height='35' /> || <AccountCircle style={{ fontSize: 35 }} />}
+							{/* <AccountCircle style={{ fontSize: 35 }} /> */}
 						</IconButton>
 					</Box>
 				</Toolbar>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Container from '@mui/material/Container';
 
@@ -12,10 +12,16 @@ import MyAccount from './MyAccount.jsx';
 import Navbar from './Navbar.jsx';
 
 export default function App() {
+	const [showNavbar, setShowNavbar] = useState(false);
+
+	useEffect(() => {
+		if (window.location.pathname !== '/') setShowNavbar(true);
+	}, []);
+
 	return (
 		<div className={styles.App}>
 			<BrowserRouter>
-				<Navbar />
+				{showNavbar && <Navbar />}
 				<Container className={styles.container}>
 					<Routes>
 						<Route path='/' element={<Login />} />

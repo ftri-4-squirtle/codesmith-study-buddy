@@ -20,7 +20,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(user, done) {
     done(null, user);
 });
-
+let userProfile = {};
 passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLECLIENTID,
         clientSecret: process.env.GOOGLECLIENTSECRET,
@@ -29,11 +29,15 @@ passport.use(new GoogleStrategy({
       },
       function(request, accessToken, refreshToken, profile, done) {
         console.log(profile);
-
+        userProfile = profile;
         return done(null, profile);
                 
     }
 ));
+
+app.get("/getUserInfo", (req, res) => {
+    res.status(200).json(userProfile)
+})
 
 app.use(cookieSession({
   name: 'google-auth-session',
