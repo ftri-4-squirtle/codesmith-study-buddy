@@ -1,46 +1,67 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PostPreview from './PostPreview.jsx';
 
-const DUMMY_DATA = [
-	{
-		id: 1,
-		title: 'Google question',
-		category: 'algorithm',
-		company: 'Google',
-		body: 'Given a number represented by a list of digits, find the next greater permutation of a number, in terms of lexicographic ordering. If there is not greater permutation possible, return the permutation with the lowest value/ordering. For example, the list [1,2,3] should return [1,3,2]. The list [1,3,2] should return [2,1,3]. The list [3,2,1] should return [1,2,3]. Can you perform the operation without allocating extra memory (disregarding the input memory)?',
-	},
-	{
-    id: 2, title: 'Meta question', category: 'algorithm', company: 'Meta', body: 'Given a tree, find the largest tree/subtree that is a BST. Given a tree, return the size of the largest tree/subtree that is a BST.'
-  },
-	{
-		id: 3,
-		title: 'Amazon question',
-		category: 'algorithm',
-		company: 'Amazon',
-		body: 'Given an array of numbers, find the length of the longest increasing subsequence in the array. The subsequence does not necessarily have to be contiguous. For example, given the array [0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15], the longest increasing subsequence has length 6: it is 0, 2, 6, 9, 11, 15.',
-	},
-];
 
 function Home() {
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [data, setData] = useState([]);
 
+  useEffect(() => {
+    fetch("/api/posts")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          setIsLoaded(true);
+          setData(result);
+        },
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        }
+      )
+  }, [])
 
-	const previews = DUMMY_DATA.map((data, index) => {
+if (error) {
+    return <div>Error: {error.message}</div>;
+  } else if (!isLoaded) {
+    return <div>Loading...</div>;
+  } else {
+    const previews = [];
     
-		return (
-			<div key={index} >
-				<PostPreview index={index} data={data} />
-			</div>
-		);
-	});
+    for (let i = data.length-1; i>=0; i--) {
+      previews.push(
+        <div key={i}>
+          <PostPreview data={data[i]}/>
+        </div>
+      )
+    }
 
-	return (
-		<div>
-			<h1>FTRI 4 Interview Questions</h1>
-			{previews}
-		</div>
-	);
+    return (
+      <div>
+        <h1>FTRI 4 Interview Questions</h1>
+        {previews}
+      </div>
+    );
+  }
 }
+// 	const previews = DUMMY_DATA.map((data, index) => {
+    
+// 		return (
+// 			<div key={index} >
+// 				<PostPreview index={index} data={data} />
+// 			</div>
+// 		);
+// 	});
+
+// 	return (
+// 		<div>
+// 			<h1>FTRI 4 Interview Questions</h1>
+// 			{previews}
+// 		</div>
+// 	);
+// }
 
 // export default connect(mapStateToProps, mapDispatchToProps)(Home);
 export default Home;
